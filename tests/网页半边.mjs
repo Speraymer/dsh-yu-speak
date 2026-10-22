@@ -85,7 +85,7 @@ const slots = {
   register: (定义, c) => { 注册 = 定义; 组件 = c; return () => {} },
 }
 
-报('模块 id 正确', 捕获.id === 'dsh-speak-up', 捕获.id)
+报('模块 id 正确', 捕获.id === 'dsh-yu-speak', 捕获.id)
 报('inject 只依赖 slots', Array.isArray(exports.inject) && exports.inject.join() === 'slots')
 exports.apply({ get: (n) => (n === 'slots' ? slots : undefined) })
 报('挂到 settings.section 槽位',
