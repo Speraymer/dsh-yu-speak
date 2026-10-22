@@ -2,10 +2,10 @@
 
 ## 来源与改动
 
-- 基于 **Yuuyuko-uu/dsh-speak-up** 0.2.1（<https://github.com/Yuuyuko-uu/dsh-speak-up>，MIT）。版权与声明见 [LICENSE](LICENSE) 和 [NOTICE.md](NOTICE.md)。
+- 基于 **Yuuyuko-uu/dsh-speak-up** 1.0.0（<https://github.com/Yuuyuko-uu/dsh-speak-up>，MIT）。版权与声明见 [LICENSE](LICENSE) 和 [NOTICE.md](NOTICE.md)。
 - 本仓改动：包名改成 `dsh-yu-speak`、设置页中文名改成「主动说话」；参数与触发文案在**运行时配置**里调整过
   （间隔 25 分、命中线 35/45、没中 +20、上限 60、安静 5~9、冷却 25、触发文案）；
-- 上游代码（`lib/`）未改；上游 0.2.1 的文案变化已合入本 README / CHANGELOG。
+- 上游代码（`lib/`）未改；上游 1.0.0 的文案变化已合入本 README / CHANGELOG。
 - ⚠ **内部 ID、路由、数据目录仍沿用旧名**（`speak-up` / `/dsh-speak-up/*` / `speak-up-config.json`），
   这样能随时降级回原版而不丢配置。
 

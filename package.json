@@ -1,6 +1,6 @@
 {
   "name": "dsh-yu-speak",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "主动说话（dsh-speak-up 的修改版）：DSH 插件。没人在跟它说话的时候，它也会自己起个话头 —— 按你设的间隔掷一次本地骰子（不花模型），掷中了就走 DSH 自己的一轮（人格、历史、工具、记忆全都是它自己的）。",
   "license": "MIT",
   "author": "Speraymer",

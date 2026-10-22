@@ -3,7 +3,7 @@
 本仓库是 **Yuuyuko-uu/dsh-speak-up** 的修改版（fork）。
 
 - 上游仓库：<https://github.com/Yuuyuko-uu/dsh-speak-up>
-- 上游在本仓库基于的版本（0.2.0 / 0.2.1）的 `package.json` 中声明 **MIT** 许可证；
+- 上游在本仓库基于的版本（1.0.0 / 1.0.0）的 `package.json` 中声明 **MIT** 许可证；
   上游仓库当时没有附带 `LICENSE` 文件，本仓库的 [LICENSE](LICENSE) 按 MIT 全文补齐，
   **版权行写的是上游作者**：`Copyright (c) 2026 Yuuyuko-uu`。
 - 本仓库对上游的改动（包名 `dsh-yu-speak`、设置页中文名「主动说话」、README/CHANGELOG 增补、
