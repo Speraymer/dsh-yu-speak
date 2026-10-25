@@ -28,7 +28,7 @@ globalThis.fetch = async (url, 选项) => {
   const 目标 = 体 && Array.isArray(体.目标会话) ? 体.目标会话 : []
   return {
     json: async () => ({
-      ok: true, 说: '保存好了', 版本: '0.1.0', 配置文件: 'C:/x/speak-up-config.json',
+      ok: true, 说: '保存好了', 版本: '2.0.0', 配置文件: 'C:/x/speak-up-config.json',
       配置: 体 || {},
       日志: [],
       目标情况: 目标.map((id) => ({
@@ -124,7 +124,7 @@ const 会话清单 = [
 服务端会话 = 会话清单
 const 造态 = (目标, 日志 = [{ 时间: '01-01 00:00:00', 文本: '已装好' }]) => ({
   ok: true,
-  版本: '0.1.0',
+  版本: '2.0.0',
   配置文件: 'C:/x/speak-up-config.json',
   活着的会话: 会话清单,
   目标情况: 目标.map((id) => {

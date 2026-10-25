@@ -1,34 +1,8 @@
 # dsh-yu-speak（主动说话）· 让它自己先开口
 
-## 来源与改动
-
-- 基于 **Yuuyuko-uu/dsh-speak-up** 1.0.0（<https://github.com/Yuuyuko-uu/dsh-speak-up>，MIT）。版权与声明见 [LICENSE](LICENSE) 和 [NOTICE.md](NOTICE.md)。
-- 本仓改动：包名改成 `dsh-yu-speak`、设置页中文名改成「主动说话」；参数与触发文案在**运行时配置**里调整过
-  （间隔 25 分、命中线 35/45、没中 +20、上限 60、安静 5~9、冷却 25、触发文案）；
-- 上游代码（`lib/`）未改；上游 1.0.0 的文案变化已合入本 README / CHANGELOG。
-- ⚠ **内部 ID、路由、数据目录仍沿用旧名**（`speak-up` / `/dsh-speak-up/*` / `speak-up-config.json`），
-  这样能随时降级回原版而不丢配置。
-
----
-
-
-给 DSH 里某个会话装一颗「会自己起话头」的心：**没人在跟它说话的时候，它也有可能先开口。**
-
-```
-定时器到点
-  └─ 掷一次本地骰子（Math.random，一个 token 都不花）
-       ├─ 没掷中 → 什么都不做，只留一条记录
-       └─ 掷中   → 往「目标会话」送一句话 → agent.followup(message)
-                    → DSH 自己开一轮：它的人格、历史、工具、记忆全都照旧
-```
-
-一句话：**只有掷中之后的那一步才花模型**，掷骰子本身是纯本地随机。
-
----
-
 ## 安装
 
-> ⚠ **先卸掉原版 `dsh-speak-up`**，本插件不能和原版共存（原因见下面「不能与原版共存」）。
+> 同一份 DSH 配置中只启用一个主动说话实例，避免重复触发。
 
 ### 一、在 DSH 里装（推荐）
 
@@ -92,31 +66,6 @@ dsh plugin --profile desktop add github:Speraymer/dsh-yu-speak
 
 > ⚠ 本仓库**自己不装、不改任何 DSH 配置、不重启任何东西**：上面三步都由装的人自己做。
 > ⚠ 改完插件代码，**只重启 DSH 才一定生效**（关掉插件再打开、重装都不一定重新读代码）。
-
-## 单独安装与降级
-
-**单独安装**：本仓可以完全独立安装 —— 除了 DSH 本体，不依赖原版 `dsh-speak-up`，也不依赖这个仓库以外的任何文件。
-把原版卸掉、只装这一个就行。
-
-**降级回原版**（或者退到本仓的旧版本）：
-
-1. 先卸掉 `dsh-yu-speak`（`dsh plugin remove`，或从 profile 的 `package.json` / `node_modules` 里删掉）；
-2. 装回原版 `dsh plugin --profile desktop add github:Yuuyuko-uu/dsh-speak-up`；
-3. **重启 DSH**。
-
-数据不用搬：内部 ID / 路由 / 配置文件名都还是旧的名字（`speak-up` / `/dsh-speak-up/*` /
-`%USERPROFILE%\.dsh\speak-up-config.json`），原版起来读的就是同一份配置，勾过的会话和调过的参数都还在。
-降级前想留个底，把 `speak-up-config.json` 复制一份即可。
-
-## 不能与原版共存
-
-`dsh-yu-speak` 和原版 `dsh-speak-up` **不能同时装**。三个硬冲突：
-
-1. **cordis 里是同一个 id**：两边 `cordis.patch.yml` 都插 `id: speak-up`，装两份会重复插入同一个设置节；
-2. **路由前缀一样**：宿主半边注册的都是 `/dsh-speak-up/*`，后加载的会把前一个的挡掉；
-3. **配置文件是同一份**：`~\.dsh\speak-up-config.json`，两个实例会互相覆盖对方的设置。
-
-换装顺序：**先卸 → 重启 → 再装**。不要用「装新的再卸旧的」，中间那一刻两份都注册着。
 
 ## 怎么用
 
@@ -264,15 +213,15 @@ DSH 自带的 `@deepseek-ai/dsh-schedule` 用的是 `ctx.sessionController.resol
 不是不能做，是**在这个安装位置上有风险**：插件被装进 profile 的 `node_modules`，
 而那里**没有** `@deepseek-ai/schemastery`（`profiles/<p>/node_modules/@deepseek-ai/` 下只有
 `dsh-home-paths`）。`export const Config = z.object({...})` 需要静态 import 它，
-import 一失败整个插件就加载不了。所以本版跟 `dsh-write` / `dsh-fish-memory` 一样：
+import 一失败整个插件就加载不了，所以这里沿用 DSH 插件常见的软依赖做法：
 自己的 json + 自己的设置页。
-（想改成原生页：`profiles/<p>/node_modules/schemastery` 这个**同名上游包 3.18.0 是在的**，
+（想改成原生页：`profiles/<p>/node_modules/schemastery` 这个依赖是存在的，
 可以试着 `import z from 'schemastery'` 再导出 `Config`，但**没验证过** Cordis 认不认这个包身份的
 schema，改之前先备份。）
 
 ### 4. 别的地方也**没验证过**
 
-- `settings.section` 这个槽位名：跟 `dsh-write` / `dsh-fish-memory` 用的是同一个，
+- `settings.section` 是 DSH 设置页的公共槽位，
   在这台机器上它们是跑通的；换 DSH 版本可能变。
 - 「距它上次说话」用 `ctx.sessionController.inspect(sid)` 翻一次已落盘的历史来找最后一条
   `user/message`。会话特别长的话这一次读会有点重（一个会话只翻一次，之后靠
