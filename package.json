@@ -1,6 +1,6 @@
 {
   "name": "dsh-yu-speak",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "DSH 主动说话插件：按本地概率与冷却规则决定是否发起一轮完整会话。",
   "license": "MIT",
   "author": "Speraymer",
@@ -36,6 +36,9 @@
     "LICENSE",
     "NOTICE.md"
   ],
+  "scripts": {
+    "test": "node --test tests/*.mjs"
+  },
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"

@@ -1,5 +1,9 @@
 # dsh-yu-speak（主动说话）· 让它自己先开口
 
+## 给 Agent 的安装与验收
+
+执行 `dsh plugin --profile desktop add github:Speraymer/dsh-yu-speak`，重启 DSH；确认“设置 → 主动说话”出现，先保持试运行并点一次演练。只有用户明确选好会话、频率和冷却后才打开真发。
+
 ## 安装
 
 > 同一份 DSH 配置中只启用一个主动说话实例，避免重复触发。
