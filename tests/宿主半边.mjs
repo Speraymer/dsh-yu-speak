@@ -265,7 +265,8 @@ test('宿主半边', async (t) => {
 
     const 态 = await 读状态()
     assert.equal(态.ok, true)
-    assert.equal(态.版本, '2.1.0')
+    assert.equal(态.版本, JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')).version,
+    '版本号要跟 package.json 一致（别在测试里写死，一升版就红）')
     assert.deepEqual(
       {
         总开关: 态.配置.总开关,
